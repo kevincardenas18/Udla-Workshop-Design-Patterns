@@ -19,18 +19,20 @@ namespace DesignPatterns.Models
         public string Model { get; set; }
         public double Gas { get; set; }
         public double FuelLimit { get; set; }
+        public int Year { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Vehicle(string color, string brand, string model, double fuelLimit = 10)
+        public Vehicle(string color, string brand, string model, int year, double fuelLimit = 10)
         {
             ID = Guid.NewGuid();
             Color = color;
             Brand = brand;
             Model = model;
             FuelLimit = fuelLimit;
+            Year = year;
         }
 
         #endregion
@@ -38,7 +40,7 @@ namespace DesignPatterns.Models
         #region Methods
         public void AddGas()
         {
-            if(Gas <= FuelLimit)
+            if (Gas <= FuelLimit)
             {
                 Gas += 0.1;
             }

@@ -1,4 +1,5 @@
-﻿using DesignPatterns.Models;
+﻿using DesignPatterns.ModelBuilder;
+using DesignPatterns.Models;
 using DesignPatterns.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using DesignPatterns.Infraestructure.FactoryMethod;
 
 namespace DesignPatterns.Controllers
 {
@@ -35,14 +37,31 @@ namespace DesignPatterns.Controllers
         [HttpGet]
         public IActionResult AddMustang()
         {
-            _vehicleRepository.AddVehicle(new Car("red","Ford","Mustang"));
+            Vehicle v = VehicleFactory.CreateVehicle("");
+            v.Color = "Azul";
+            _vehicleRepository.AddVehicle(v);
+
+            ICollection<Vehicle> vehicles = _vehicleRepository.GetVehicles();
+
+            foreach (Vehicle vehicle in vehicles)
+            {
+                Debug.WriteLine("Vehicle: " + vehicle.Color);
+            }
+
             return Redirect("/");
         }
 
         [HttpGet]
         public IActionResult AddExplorer()
         {
-            _vehicleRepository.AddVehicle(new Car("red", "Ford", "Explorer"));
+            _vehicleRepository.AddVehicle(VehicleFactory.CreateVehicle("Explorer"));
+            return Redirect("/");
+        }
+
+        [HttpGet]
+        public IActionResult AddEscape()
+        {
+            _vehicleRepository.AddVehicle(VehicleFactory.CreateVehicle("Escape"));
             return Redirect("/");
         }
 
